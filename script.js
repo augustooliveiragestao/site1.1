@@ -14,7 +14,14 @@ function animateYear() {
             yearEl.innerText = endYear;
         }
     }
-    requestAnimationFrame(updateCount);
+
+    const observer = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+            requestAnimationFrame(updateCount);
+            observer.disconnect();
+        }
+    });
+    observer.observe(yearEl);
 }
 
 window.addEventListener('DOMContentLoaded', () => {
@@ -25,4 +32,5 @@ window.addEventListener('DOMContentLoaded', () => {
     ScrollReveal().reveal('.massive-title', reveal);
     ScrollReveal().reveal('.service-item', { ...reveal, interval: 150 });
     ScrollReveal().reveal('.job-card', { ...reveal, interval: 100 });
+    ScrollReveal().reveal('.stat-box', { ...reveal, origin: 'right' });
 });
